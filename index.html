@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ABW | TicketSports CSV Parser</title>
+    <style>
+      #output {
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Formatador de CSV do TicketSports</h2>
+
+    CSV<br />
+    <textarea
+      id="input"
+      rows="10"
+      cols="50"
+      placeholder="Insira CSV do TicketSports aqui"
+    ></textarea
+    ><br />
+
+    Ordem das categorias<br />
+    <textarea id="ordemCatsInput" rows="15" cols="50" placeholder="Ordem das categorias">
+Estreantes
+Iniciante Masculino
+Iniciante Feminino
+Iniciante
+Intermediario
+Intermediário
+Feminino
+Avançado
+Avancado
+Open
+Pro
+Profissional
+    </textarea><br>
+    <button onclick="runParser()">Formatar Lista</button>
+
+    <div id="output"></div>
+
+    <script src="parser.js"></script>
+  </body>
+</html>
