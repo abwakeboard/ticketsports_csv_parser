@@ -5,6 +5,6 @@ Ferramenta simples pra formatar o CSV de inscritos do TicketSports em uma lista 
 ## Uso:
 - Pegue uma lista de inscritos no site do TicketSports
 - Abra a lista com o bloco de notas e copie todo o conteúdo do arquivo
-- Abra o link [https://abwakeboard.github.io/ticketsports_cvs_parser](https://abwakeboard.github.io/ticketsports_cvs_parser)
+- Abra o link [https://abwakeboard.github.io/ticketsports_csv_parser/](https://abwakeboard.github.io/ticketsports_csv_parser/)
 - Cole a lista na área de texto
 - Pressione o botão "Formatar Lista"
