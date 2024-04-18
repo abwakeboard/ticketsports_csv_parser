@@ -1,13 +1,38 @@
-// o botão na UI roda essa função
-function runParser() {
-    const sortedData = parseCSV();
-    printData(sortedData);
+// lida com usuario arrastando arquivo pra area
+function handleDrop(event) {
+    event.preventDefault();
+    var files = event.dataTransfer.files;
+    handleFiles(files);
+}
+
+// lida com usuario clicando em vez de arrastando
+document.getElementById('drop-area').addEventListener('click', function() {
+    document.getElementById('file-input').click();
+});
+const inputElement = document.getElementById("file-input");
+inputElement.addEventListener("change", handleFileInput, false);
+function handleFileInput() {
+  handleFiles(this.files)
+}
+
+// lida com arquivo CSV
+function handleFiles(files) {
+    var file = files[0];
+    if (file.type === 'text/csv') {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            parseCSV(event.target.result);
+        };
+        reader.readAsText(file);
+    } else {
+        alert('Please drop a CSV file.');
+    }
 }
 
 // formata o CSV do ticketsports em um JSON, agrupado por categorias, ja na ordem certa pra criar a lista na UI
-function parseCSV() {
-    const inputText = document.getElementById(`input`).value.trim();
-    const lines = inputText.split(`\n`);
+function parseCSV(inputText) {
+
+    const lines = inputText.trim().split('\n');
     const listaRaw = {};
 
     // a partir da primeira linha, vamos pegar os índices dos campos "Nome completo" e "Modalidade".
@@ -57,7 +82,8 @@ function parseCSV() {
         element.sort();
     });
 
-    return listaNaOrdem;
+    // return listaNaOrdem;
+    printData(listaNaOrdem);
 
 }
 
