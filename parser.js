@@ -102,3 +102,9 @@ function printData(sortedData) {
 
     document.getElementById(`output`).innerHTML = outputHTML;
 }
+
+// selecionar output
+function selectText() {
+    let output = document.getElementById(`output`);
+    window.getSelection().selectAllChildren(output);
+}
