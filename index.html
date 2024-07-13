@@ -4,48 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ABW | TicketSports CSV Parser</title>
-    <style>
-      #drop-area {
-        border: 2px dashed #ccc;
-        padding: 20px;
-        width: 300px;
-        margin-bottom: 20px;
-      }
-
-      #output {
-        border: 1px solid #ccc;
-        padding: 10px;
-        width: 300px;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h2>Formatador de CSV do TicketSports</h2>
+    <div class="no-print">
+      <h2>Formatador de CSV do TicketSports</h2>
 
-    <div
-      id="drop-area"
-      ondragover="event.preventDefault()"
-      ondrop="handleDrop(event)"
-    >
-      Arraste arquivo CSV aqui, ou clique para selecionar
-      <input
-        type="file"
-        id="file-input"
-        style="display: none"
-        accept=".csv"
-      />
-    </div>
+      <div
+        id="drop-area"
+        ondragover="event.preventDefault()"
+        ondrop="handleDrop(event)"
+      >
+        Arraste arquivo CSV aqui, ou clique para selecionar
+        <input
+          type="file"
+          id="file-input"
+          style="display: none"
+          accept=".csv"
+        />
+      </div>
 
-    <br />
+      <br />
 
-    Ordem das categorias<br />
-    <textarea
-      id="ordemCatsInput"
-      rows="15"
-      cols="50"
-      placeholder="Ordem das categorias"
-      spellcheck="false"
-    >
+      Ordem das categorias<br />
+      <textarea
+        id="ordemCatsInput"
+        rows="15"
+        cols="50"
+        placeholder="Ordem das categorias"
+        spellcheck="false"
+      >
 Estreantes Masculino
 Estreantes Feminino
 Estreantes
@@ -62,11 +50,11 @@ Open
 Pro
 Profissional
     </textarea
-    ><br />
+      ><br />
 
-    <button onclick="selectText()">Selecionar</button>
-    <div id="output"></div>
-
+      <button onclick="selectText()">Selecionar</button>
+      <div id="output"></div>
+    </div>
     <div id="outputImpressao"></div>
 
     <script src="parser.js"></script>

@@ -38,16 +38,16 @@ function csvToJSON(inputText) {
     const lines = inputText.split('\n');
     const result = [];
     const headers = lines[0].split(';').map(header => header.trim());
-  
+
     for (let i = 1; i < lines.length; i++) {
-      const obj = {};
-      const currentLine = lines[i].split(';').map(value => value.trim());
-  
-      for (let j = 0; j < headers.length; j++) {
-        obj[headers[j]] = currentLine[j];
-      }
-  
-      result.push(obj);
+        const obj = {};
+        const currentLine = lines[i].split(';').map(value => value.trim());
+
+        for (let j = 0; j < headers.length; j++) {
+            obj[headers[j]] = currentLine[j];
+        }
+
+        result.push(obj);
     }
 
     return result;
@@ -58,15 +58,15 @@ function groupBy(arr, key) {
     return arr.reduce((result, item) => {
         // Get the value of the specified key
         const groupKey = item[key];
-        
+
         // If the group does not exist, create it
         if (!result[groupKey]) {
             result[groupKey] = [];
         }
-        
+
         // Push the item to the group
         result[groupKey].push(item);
-        
+
         return result;
     }, {});
 }
@@ -108,7 +108,7 @@ function parseCSV(inputText) {
         element.sort((a, b) => {
             const nameA = a["Nome completo"].toUpperCase(); // Convert to uppercase to ensure case-insensitive comparison
             const nameB = b["Nome completo"].toUpperCase(); // Convert to uppercase to ensure case-insensitive comparison
-        
+
             if (nameA < nameB) {
                 return -1; // nameA comes before nameB in alphabetical order
             }
@@ -149,9 +149,21 @@ function printListaSimples(sortedData) {
 function printListaImpressao(sortedData) {
     let outputHTML = ``;
     for (const modalidade in sortedData) {
-        outputHTML += `<div class='modalidade'><h2>${modalidade}</h2>`;
+        outputHTML += `<div class='modalidade'>`;
 
+        outputHTML += `
+                                <div class='row header'>
+                                    <div class='col-4 titulo'>${modalidade}</div>
+                                    <div class='col'>Freqência que anda</div>
+                                    <div class='col'>Lugar que anda</div>
+                                    <div class='col'>Patrô</div>
+                                    <div class='col'>Prancha</div>
+                                    <div class='col'>Contato de emergencia</div>
+                                    <div class='col'>Whatsapp</div>
 
+                                </div>
+                                <div class='separador'></div>
+`;
 
         // Celular
         // Cidade
@@ -168,21 +180,26 @@ function printListaImpressao(sortedData) {
         // prancha
         // stance
         // whatsapp
-        
+
         sortedData[modalidade].forEach(function (atleta) {
-            outputHTML += `<div class='atleta'>
-                                <div class='col nome'>${atleta['Nome completo']}</div>
-                                <div class='col sexo'>${atleta['Sexo']}</div>
-                                <div class='col idade'>${atleta['Data de nascimento']}</div>
-                                <div class='col stance'>${atleta['stance']}</div>
-                                <div class='col instagram'>${atleta['Instagram']}</div>
-                                <div class='col cidade'>${atleta['Cidade']}</div>
-                                <div class='col uf'>${atleta['UF']}</div>
+            console.log(`atleta`, atleta);
+            outputHTML += `<div class='atleta row'>
+
+                                <div class='col-4 dados_principais'>
+                                    <div class='nome'>${atleta['Nome completo']}</div>
+                                    <div class='idade'>${calculateAge(atleta['Data de nascimento'])} anos</div>
+                                    <div class='separador'></div>
+                                    <div class='stance'><img class='icone' src='img/stance.svg'>${atleta['stance']}</div>
+                                    <div class='instagram'><img class='icone' src='img/instagram.svg'>${atleta['Instagram']}</div>
+                                    <div class='camiseta'><img class='icone' src='img/camiseta.svg'>${atleta['Camiseta do Kit Atleta']}</div>
+                                    <div class='col cidade'><img class='icone' src='img/cidade.svg'>${atleta['Cidade']} - ${atleta['UF']}</div>
+                                </div>
+
+                                <div class='col frequencia'>${atleta['frequencia']}</div>
+                                <div class='col lugar_que_pratica'>${atleta['lugar_que_pratica']}</div>
+                                <div class='col patrocinadores'>${atleta['patrocinadores']}</div>
+                                <div class='col prancha'>${atleta['prancha']}</div>
                                 <div class='col contato_de_emergencia'>${atleta['contato_de_emergencia']}</div>
-                                <div class='col frequencia'>Frequência:<br>${atleta['frequencia']}</div>
-                                <div class='col lugar_que_pratica'>Lugar que pratica:<br>${atleta['lugar_que_pratica']}</div>
-                                <div class='col patrocinadores'>Patrocinadores:<br>${atleta['patrocinadores']}</div>
-                                <div class='col prancha'>Marca da prancha:<br>${atleta['prancha']}</div>
                                 <div class='col whatsapp'>${atleta['whatsapp']}</div>
                             </div>`;
         });
@@ -197,4 +214,27 @@ function printListaImpressao(sortedData) {
 function selectText() {
     let output = document.getElementById(`output`);
     window.getSelection().selectAllChildren(output);
+}
+
+function calculateAge(birthDateString) {
+    // Split the input string into day, month, and year
+    const [day, month, year] = birthDateString.split('/').map(Number);
+
+    // Create a Date object from the birth date
+    const birthDate = new Date(year, month - 1, day);
+
+    // Get the current date
+    const today = new Date();
+
+    // Calculate the age
+    let age = today.getFullYear() - birthDate.getFullYear();
+
+    // Adjust the age if the current date is before the birth date in the current year
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    const dayDifference = today.getDate() - birthDate.getDate();
+    if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+        age--;
+    }
+
+    return age;
 }
