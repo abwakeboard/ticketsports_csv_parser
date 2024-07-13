@@ -156,6 +156,7 @@ function printListaImpressao(sortedData) {
                                     <div class='col-4 titulo'>${modalidade}</div>
                                     <div class='col'>Freqência que anda</div>
                                     <div class='col'>Lugar que anda</div>
+                                    <div class='col'>Manobras que acerta</div>
                                     <div class='col'>Patrô</div>
                                     <div class='col'>Prancha</div>
                                     <div class='col'>Contato de emergencia</div>
@@ -197,10 +198,12 @@ function printListaImpressao(sortedData) {
 
                                 <div class='col frequencia'>${atleta['frequencia']}</div>
                                 <div class='col lugar_que_pratica'>${atleta['lugar_que_pratica']}</div>
+                                <div class='col Manobras_que_acerta'>${atleta['Manobras_que_acerta']}</div>
                                 <div class='col patrocinadores'>${atleta['patrocinadores']}</div>
                                 <div class='col prancha'>${atleta['prancha']}</div>
                                 <div class='col contato_de_emergencia'>${atleta['contato_de_emergencia']}</div>
                                 <div class='col whatsapp'>${atleta['whatsapp']}</div>
+                                
                             </div>`;
         });
 
