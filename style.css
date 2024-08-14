@@ -33,12 +33,11 @@
 }
 
 .header {
-    padding: 1mm 3mm;
-    column-gap: 4mm;
-    font-weight: 700;
-    background-color: #f0f0f0;
-  }
-  
+  padding: 1mm 3mm;
+  column-gap: 4mm;
+  font-weight: 700;
+  background-color: #f0f0f0;
+}
 
 .atleta {
   display: flex;
@@ -79,6 +78,9 @@
   width: 100%;
 }
 
+.col.celular {
+  text-wrap: nowrap;
+}
 
 /* utilidades */
 
@@ -88,6 +90,9 @@
 }
 .col {
   flex: 1 0 0%;
+  white-space: break-spaces;
+  text-wrap: balance;
+  word-break: break-word;
 }
 
 .col-auto {

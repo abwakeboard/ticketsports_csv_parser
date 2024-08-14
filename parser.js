@@ -160,7 +160,7 @@ function printListaImpressao(sortedData) {
                                     <div class='col'>Patrô</div>
                                     <div class='col'>Prancha</div>
                                     <div class='col'>Contato de emergencia</div>
-                                    <div class='col'>Whatsapp</div>
+                                    <div class='col'>Celular</div>
 
                                 </div>
                                 <div class='separador'></div>
@@ -192,7 +192,7 @@ function printListaImpressao(sortedData) {
                                     <div class='separador'></div>
                                     <div class='stance'><img class='icone' src='img/stance.svg'>${atleta['stance']}</div>
                                     <div class='instagram'><img class='icone' src='img/instagram.svg'>${atleta['Instagram']}</div>
-                                    <div class='camiseta'><img class='icone' src='img/camiseta.svg'>${atleta['Camiseta do Kit Atleta']}</div>
+                                    <div class='camiseta'><img class='icone' src='img/camiseta.svg'>${atleta['Camiseta do Kit Atleta'] || ""}</div>
                                     <div class='col cidade'><img class='icone' src='img/cidade.svg'>${atleta['Cidade']} - ${atleta['UF']}</div>
                                 </div>
 
@@ -202,7 +202,7 @@ function printListaImpressao(sortedData) {
                                 <div class='col patrocinadores'>${atleta['patrocinadores']}</div>
                                 <div class='col prancha'>${atleta['prancha']}</div>
                                 <div class='col contato_de_emergencia'>${atleta['contato_de_emergencia']}</div>
-                                <div class='col whatsapp'>${atleta['whatsapp']}</div>
+                                <div class='col celular'>${phoneMask(atleta['Celular'])}</div>
                                 
                             </div>`;
         });
@@ -240,4 +240,18 @@ function calculateAge(birthDateString) {
     }
 
     return age;
+}
+
+// formata numero de celular
+function phoneMask(value) {
+    if (!value) return "";
+    value = value.replace(/\D/g, '');
+    if (value.startsWith(`55`)) {
+        value = value.replace(/(\d{2})(\d{2})(\d)/, "($2) $3");
+        value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+    } else {
+        value = value.replace(/(\d{2})(\d)/, "($1) $2");
+        value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+    }
+    return value
 }
