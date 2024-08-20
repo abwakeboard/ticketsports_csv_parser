@@ -188,6 +188,7 @@ function printListaImpressao(sortedData) {
 
                                 <div class='col-4 dados_principais'>
                                     <div class='nome'>${atleta['Nome completo']}</div>
+                                    <div class='apelido'>${atleta['apelido'] || ""}</div>
                                     <div class='idade'>${calculateAge(atleta['Data de nascimento'])} anos</div>
                                     <div class='separador'></div>
                                     <div class='stance'><img class='icone' src='img/stance.svg'>${atleta['stance']}</div>

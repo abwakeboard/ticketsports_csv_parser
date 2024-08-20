@@ -56,6 +56,10 @@
   /* width: 100%; */
 }
 
+.apelido {
+  font-style: italic;
+}
+
 .atleta:nth-child(even) {
   background: #f0f0f0;
 }
