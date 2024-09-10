@@ -26,6 +26,24 @@
 
       <br />
 
+      <details>
+        <summary>Calculadora de valor de inscrição</summary>
+        <div id="calculadoraDeInscricao">
+          <div>
+            <div>Valor que o atleta paga</div>
+            <input type="number" name="" id="valorFinal" />
+          </div>
+          <div>
+            <div>Valor pra inserir no TicketSports</div>
+            <div id="valorTS"></div>
+          </div>
+          <div>
+            <div>Valor do desconto para filiados</div>
+            <div id="valorFiliadosTS"></div>
+          </div>
+        </div>
+      </details>
+
       Ordem das categorias<br />
       <textarea
         id="ordemCatsInput"
@@ -58,5 +76,6 @@ Profissional
     <div id="outputImpressao"></div>
 
     <script src="parser.js"></script>
+    <script src="calcValor.js"></script>
   </body>
 </html>

@@ -154,3 +154,13 @@
 .col-12 {
   width: 100%;
 }
+
+details {
+  margin-bottom: 20px;
+}
+
+#calculadoraDeInscricao {
+  display: flex;
+  gap: 20px;
+  font-family: sans-serif;
+}
