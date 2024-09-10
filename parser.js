@@ -154,6 +154,7 @@ function printListaImpressao(sortedData) {
         outputHTML += `
                                 <div class='row header'>
                                     <div class='col-4 titulo'>${modalidade}</div>
+                                    <div class='col'>Há quantos anos anda</div>
                                     <div class='col'>Freqência que anda</div>
                                     <div class='col'>Lugar que anda</div>
                                     <div class='col'>Manobras que acerta</div>
@@ -197,6 +198,7 @@ function printListaImpressao(sortedData) {
                                     <div class='col cidade'><img class='icone' src='img/cidade.svg'>${atleta['Cidade']} - ${atleta['UF']}</div>
                                 </div>
 
+                                <div class='col tempo_que_anda'>${atleta['tempo_que_anda']}</div>
                                 <div class='col frequencia'>${atleta['frequencia']}</div>
                                 <div class='col lugar_que_pratica'>${atleta['lugar_que_pratica']}</div>
                                 <div class='col Manobras_que_acerta'>${atleta['Manobras_que_acerta']}</div>
