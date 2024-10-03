@@ -160,6 +160,7 @@ function printListaImpressao(sortedData) {
                                     <div class='col'>Manobras que acerta</div>
                                     <div class='col'>Patrô</div>
                                     <div class='col'>Prancha</div>
+                                    <div class='col'>Curiosidade</div>
                                     <div class='col'>Contato de emergencia</div>
                                     <div class='col'>Celular</div>
 
@@ -204,6 +205,7 @@ function printListaImpressao(sortedData) {
                                 <div class='col Manobras_que_acerta'>${atleta['Manobras_que_acerta']}</div>
                                 <div class='col patrocinadores'>${atleta['patrocinadores']}</div>
                                 <div class='col prancha'>${atleta['prancha']}</div>
+                                <div class='col curiosidade'>${atleta['curiosidade']}</div>
                                 <div class='col contato_de_emergencia'>${atleta['contato_de_emergencia']}</div>
                                 <div class='col celular'>${phoneMask(atleta['Celular'])}</div>
                                 
