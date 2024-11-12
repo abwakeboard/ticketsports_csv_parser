@@ -186,6 +186,10 @@ function printListaImpressao(sortedData) {
 
         sortedData[modalidade].forEach(function (atleta) {
             console.log(`atleta`, atleta);
+
+            const camiseta = [atleta['Camiseta do Kit Atleta'], atleta['Camiseta'], atleta['Camiseta Wakeboard'], atleta['Camiseta Wakesurf']]
+                .find(value => typeof value === 'string' && value.trim() !== '');
+
             outputHTML += `<div class='atleta row'>
 
                                 <div class='col-4 dados_principais'>
@@ -195,7 +199,7 @@ function printListaImpressao(sortedData) {
                                     <div class='separador'></div>
                                     <div class='stance'><img class='icone' src='img/stance.svg'>${atleta['stance']}</div>
                                     <div class='instagram'><img class='icone' src='img/instagram.svg'>${atleta['Instagram']}</div>
-                                    <div class='camiseta'><img class='icone' src='img/camiseta.svg'>${atleta['Camiseta do Kit Atleta'] || ""}</div>
+                                    <div class='camiseta'><img class='icone' src='img/camiseta.svg'>${camiseta}</div>
                                     <div class='col cidade'><img class='icone' src='img/cidade.svg'>${atleta['Cidade']} - ${atleta['UF']}</div>
                                 </div>
 
