@@ -164,3 +164,21 @@ details {
   gap: 20px;
   font-family: sans-serif;
 }
+
+#column-mapper-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.mapper-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: sans-serif;
+}
+
+.mapper-field select {
+  padding: 6px 8px;
+}

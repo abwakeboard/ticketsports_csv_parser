@@ -3,26 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ABW | TicketSports CSV Parser</title>
+    <title>ABW | TicketSports/Sympla Parser</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="no-print">
-      <h2>Formatador de CSV do TicketSports</h2>
+      <h2>Formatador de CSV/XLSX do TicketSports e Sympla</h2>
 
       <div
         id="drop-area"
         ondragover="event.preventDefault()"
         ondrop="handleDrop(event)"
       >
-        Arraste arquivo CSV aqui, ou clique para selecionar
+        Arraste arquivo CSV/XLSX aqui, ou clique para selecionar
         <input
           type="file"
           id="file-input"
           style="display: none"
-          accept=".csv"
+          accept=".csv,.xlsx"
         />
       </div>
+
+      <details id="column-mapper" style="display: none">
+        <summary>Mapeamento manual de colunas</summary>
+        <p>
+          Se algum campo do XLSX/CSV não for reconhecido automaticamente, selecione a coluna correta abaixo.
+        </p>
+        <div id="column-mapper-fields"></div>
+      </details>
 
       <br />
 
@@ -92,6 +100,7 @@ Profissional
     </div>
     <div id="outputImpressao"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="parser.js"></script>
     <script src="calcValor.js"></script>
   </body>
