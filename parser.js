@@ -1,6 +1,6 @@
 const COLUMN_CONFIG = [
     { key: 'Nome completo', label: 'Nome completo', required: true, aliases: ['nome completo', 'nome', 'participante'] },
-    { key: 'Modalidade', label: 'Modalidade', required: true, aliases: ['modalidade', 'tipo de ingresso', 'ingresso'] },
+    { key: 'Modalidade', label: 'Modalidade', required: true, aliases: ['modalidade', 'tipo de ingresso', 'ingresso', 'categoria'] },
     { key: 'Data de nascimento', label: 'Data de nascimento', aliases: ['data de nascimento', 'nascimento'] },
     { key: 'Celular', label: 'Celular', aliases: ['celular', 'whatsapp', 'telefone'] },
     { key: 'Cidade', label: 'Cidade', aliases: ['cidade'] },
@@ -9,8 +9,8 @@ const COLUMN_CONFIG = [
     { key: 'contato_de_emergencia', label: 'Contato de emergencia', aliases: ['contato de emergencia', 'contato_de_emergencia'] },
     { key: 'stance', label: 'Stance', aliases: ['stance', 'stace', 'base'] },
     { key: 'frequencia', label: 'Frequencia', aliases: ['frequencia', 'com que frequencia voce anda de wake'] },
-    { key: 'tempo_que_anda', label: 'Ha quantos anos anda', aliases: ['tempo que anda', 'ha quantos anos voce anda de wake'] },
-    { key: 'lugar_que_pratica', label: 'Lugar que anda', aliases: ['lugar que pratica', 'em que lugares voce anda de wake'] },
+    { key: 'tempo_que_anda', label: 'Ha quantos anos anda', aliases: ['tempo que anda', 'ha quantos anos voce anda de wake', 'ha quantos anos voce pratica'] },
+    { key: 'lugar_que_pratica', label: 'Lugar que anda', aliases: ['lugar que pratica', 'em que lugares voce anda de wake', 'em que lugares voce anda'] },
     { key: 'Manobras_que_acerta', label: 'Manobras que acerta', aliases: ['manobras que acerta', '3 principais manobras que voce acerta'] },
     { key: 'patrocinadores', label: 'Patrocinadores', aliases: ['patrocinadores', 'voce tem patrocinadores quais'] },
     { key: 'prancha', label: 'Prancha', aliases: ['prancha', 'qual a marca da sua prancha'] },
@@ -71,10 +71,10 @@ async function handleFiles(files) {
         const worksheet = workbook.Sheets[sheetName];
         fixWorksheetRange(worksheet);
         const matrix = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
-        const parsed = parseSymplaWorksheet(matrix);
+        const parsed = parseXlsxWorksheet(matrix);
 
         prepareImportedData({
-            source: 'xlsx',
+            source: parsed.source,
             headers: parsed.headers,
             rows: parsed.rows
         });
@@ -131,8 +131,11 @@ function csvToJSON(inputText) {
     });
 }
 
-function parseSymplaWorksheet(matrix) {
-    const headerRowIndex = findHeaderRowIndex(matrix, 'Tipo de ingresso', 7);
+function parseXlsxWorksheet(matrix) {
+    const source = detectXlsxSource(matrix);
+    const headerRowIndex = source === 'sympla'
+        ? findHeaderRowIndex(matrix, 'Tipo de ingresso', 7)
+        : findHeaderRowIndex(matrix, 'Categoria', 0);
     const headers = (matrix[headerRowIndex] || []).map(value => String(value || '').trim());
 
     const rows = matrix
@@ -146,7 +149,22 @@ function parseSymplaWorksheet(matrix) {
             return obj;
         });
 
-    return { headers, rows };
+    return { source, headers, rows };
+}
+
+function detectXlsxSource(matrix) {
+    const firstNonEmptyRow = matrix.find(row =>
+        row.some(cell => String(cell || '').trim() !== '')
+    ) || [];
+    const normalizedHeaders = firstNonEmptyRow.map(normalizeHeader);
+
+    if (normalizedHeaders.includes(normalizeHeader('Categoria')) &&
+        normalizedHeaders.includes(normalizeHeader('Data da Compra')) &&
+        normalizedHeaders.includes(normalizeHeader('Nome'))) {
+        return 'sportickets';
+    }
+
+    return 'sympla';
 }
 
 function findHeaderRowIndex(matrix, expectedHeader, fallbackIndex) {
@@ -175,13 +193,19 @@ function buildInitialMapping(headers, source) {
     }));
 
     return COLUMN_CONFIG.reduce((mapping, config) => {
-        if (source === 'xlsx' && config.key === 'Modalidade') {
+        if (source === 'sympla' && config.key === 'Modalidade') {
             const tipoDeIngresso = normalizedHeaders.find(header => header.normalized === normalizeHeader('Tipo de ingresso'));
             mapping[config.key] = tipoDeIngresso ? tipoDeIngresso.original : '';
             return mapping;
         }
 
-        if (source === 'xlsx' && config.key === 'Nome completo') {
+        if (source === 'sportickets' && config.key === 'Modalidade') {
+            const categoria = normalizedHeaders.find(header => header.normalized === normalizeHeader('Categoria'));
+            mapping[config.key] = categoria ? categoria.original : '';
+            return mapping;
+        }
+
+        if (source === 'sympla' && config.key === 'Nome completo') {
             mapping[config.key] = '';
             return mapping;
         }
@@ -288,7 +312,7 @@ function processImportedData() {
 }
 
 function shouldIncludeRow(row, source) {
-    if (source !== 'xlsx') {
+    if (source !== 'sympla') {
         return true;
     }
 
