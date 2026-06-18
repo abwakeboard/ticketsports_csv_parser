@@ -200,8 +200,9 @@ function buildInitialMapping(headers, source) {
         }
 
         if (source === 'sportickets' && config.key === 'Modalidade') {
+            const modalidade = normalizedHeaders.find(header => header.normalized === normalizeHeader('Modalidade'));
             const categoria = normalizedHeaders.find(header => header.normalized === normalizeHeader('Categoria'));
-            mapping[config.key] = categoria ? categoria.original : '';
+            mapping[config.key] = modalidade ? modalidade.original : (categoria ? categoria.original : '');
             return mapping;
         }
 
@@ -218,8 +219,17 @@ function buildInitialMapping(headers, source) {
             }
         }
 
+        const exactMatch = normalizedHeaders.find(header =>
+            header.normalized === normalizeHeader(config.key)
+        );
+
+        if (exactMatch) {
+            mapping[config.key] = exactMatch.original;
+            return mapping;
+        }
+
         const matched = normalizedHeaders.find(header =>
-            headerMatchesConfig(header.normalized, config)
+            config.aliases.some(alias => headerMatchesAlias(header.normalized, alias))
         );
 
         mapping[config.key] = matched ? matched.original : '';
